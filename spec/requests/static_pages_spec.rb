@@ -1,5 +1,10 @@
 # to run test on static pages use command 
 # $ bundle exec rspec spec/requests/static_pages_spec.rb
+# to run tests with spork
+# start the spork server in another terminal window with 
+# $ bundle exec spork
+# then! run your test
+# $ time bundle exec rspec spec/requests/static_pages_spec.rb 
 
 require 'spec_helper'
 
@@ -12,11 +17,17 @@ describe "Static pages" do
       page.should have_selector('h1', :text => 'Sample App')
     end
 
-    it "should have the title 'Home'" do
+    it "should have the base title" do
       visit '/static_pages/home'
       page.should have_selector('title',
-        :text => "Ruby on Rails Tutorial Sample App | Home")
+        :text => "Ruby on Rails Tutorial Sample App")
     end
+
+    it "should not have a custom page title" do
+      visit '/static_pages/home'
+      page.should_not have_selector('title', :text => '| Home')
+    end
+
   end
 
   describe "Help page" do
@@ -46,4 +57,19 @@ describe "Static pages" do
         :text => "Ruby on Rails Tutorial Sample App | About Us")
     end
   end
+
+  describe "Contacts page" do
+
+    it "should have the h1 'Contacts'" do
+      visit '/static_pages/contacts'
+      page.should have_selector('h1', :text => 'Contacts')
+    end
+
+    it "should have the title 'Contacts'" do
+      visit '/static_pages/contacts'
+      page.should have_selector('title',
+        :text => "Ruby on Rails Tutorial Sample App | Contacts")
+    end
+  end
+
 end
