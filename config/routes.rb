@@ -1,12 +1,20 @@
 SampleApp::Application.routes.draw do
-  get "static_pages/home"
 
-  get "static_pages/help"
+  get "users/new"
 
-  get "static_pages/about"
+  # the below commands tell rails to
+  # 1.) match the URI's to specified
+      # i.e. about_url => 'http://localhost:3000/about'
+  # 2.) match the named path to specified
+      # i.e. about_path => '/about'
 
-  get "static_pages/contacts"
+  root              to: 'static_pages#home' 
 
+  match '/signup',  to: 'users#new'
+
+  match '/help',    to: 'static_pages#help'    
+  match '/about',   to: 'static_pages#about'   
+  match '/contact', to: 'static_pages#contact'
 
 
   # The priority is based upon order of creation:
